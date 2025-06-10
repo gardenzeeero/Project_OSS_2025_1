@@ -9,7 +9,8 @@ def main():
         print("1. 지출 추가")
         print("2. 지출 목록 보기")
         print("3. 총 지출 보기")
-        print("4. 종료")
+        print("4. 반성 점수 요약")
+        print("5. 종료")
         choice = input("선택 > ")
 
         if choice == "1":
@@ -20,7 +21,18 @@ def main():
             except ValueError:
                 print("잘못된 금액입니다.\n")
                 continue
-            budget.add_expense(category, description, amount)
+            
+            print("반성 점수 (1-10, 1: 전혀 후회 안됨, 10: 매우 후회됨)")
+            try:
+                reflection_score = int(input("반성 점수: "))
+                if reflection_score < 1 or reflection_score > 10:
+                    print("반성 점수는 1~10 사이여야 합니다.\n")
+                    continue
+            except ValueError:
+                print("잘못된 반성 점수입니다.\n")
+                continue
+                
+            budget.add_expense(category, description, amount, reflection_score)
 
         elif choice == "2":
             budget.list_expenses()
@@ -29,6 +41,9 @@ def main():
             budget.total_spent()
 
         elif choice == "4":
+            budget.reflection_summary()
+
+        elif choice == "5":
             print("가계부를 종료합니다.")
             break
 
